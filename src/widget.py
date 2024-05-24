@@ -1,11 +1,19 @@
 from .masks import get_masked_number
 
 
-def bank_card_mask(bank_card: str) -> str:
+def hide_card_details(bank_card: str) -> str:
     """Функция, которая возвращает исходную строку с замаскированным номером карты/счета"""
-    card_parts = bank_card.split()
-    card_parts[-1] = get_masked_number(card_parts[-1])
-    return " ".join(card_parts)
+    operation_name = []
+    nums = []
+    replacing_spaces = bank_card.replace(" ", "")
+    for card in replacing_spaces:
+        if card.isalpha():
+            operation_name.append(card)
+            connect_name = "".join(operation_name)
+        else:
+            nums.append(card)
+            connect_nums = "".join(nums)
+    return f"{connect_name} {get_masked_number(connect_nums)}"
 
 
 def get_date(date: str) -> str:
